@@ -1,51 +1,41 @@
-# Zwavejs2Mqtt
+<!--
+ * @Author: your name
+ * @Date: 2021-12-02 15:27:11
+ * @LastEditTime: 2021-12-02 15:32:56
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \zwavejs2mqtt\README.md
+-->
+# install build and run
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/zwave-js/zwavejs2mqtt)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![MadeWithVueJs.com shield](https://madewithvuejs.com/storage/repo-shields/1897-shield.svg)](https://madewithvuejs.com/p/zwavejs2mqtt/shield-link)
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png)](https://opensource.org/licenses/mit-license.php)
-[![ci](https://github.com/zwave-js/zwavejs2mqtt/workflows/ci/badge.svg?branch=master)](https://github.com/zwave-js/zwavejs2mqtt/actions?query=workflow%3Aci+branch%3Amaster)
-[![Docker Release](https://github.com/zwave-js/zwavejs2mqtt/actions/workflows/docker-release.yml/badge.svg)](https://github.com/zwave-js/zwavejs2mqtt/actions/workflows/docker-release.yml)
-[![GitHub All Releases](https://img.shields.io/github/downloads/zwave-js/zwavejs2mqtt/total)](https://github.com/zwave-js/zwavejs2mqtt/releases)
-[![Coverage Status](https://coveralls.io/repos/github/zwave-js/zwavejs2mqtt/badge.svg?branch=master)](https://coveralls.io/github/zwave-js/zwavejs2mqtt?branch=master)
-[![Known Vulnerabilities](https://snyk.io/test/github/zwave-js/zwavejs2mqtt/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zwave-js/zwavejs2mqtt?targetFile=package.json)
-[![Dependencies Status](https://david-dm.org/zwave-js/zwavejs2mqtt/status.svg)](https://david-dm.org/zwave-js/zwavejs2mqtt)
-[![devDependencies Status](https://david-dm.org/zwave-js/zwavejs2mqtt/dev-status.svg)](https://david-dm.org/zwave-js/zwavejs2mqtt?type=dev)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/zwave-js/zwavejs2mqtt.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/zwave-js/zwavejs2mqtt/alerts/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/zwave-js/zwavejs2mqtt.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/zwave-js/zwavejs2mqtt/context:javascript)
+```bash
+git clone https://github.com/zwave-js/zwavejs2mqtt
+cd zwavejs2mqtt
+yarn install
+yarn run build
+yarn start
+```
 
-[![Join channel](https://img.shields.io/badge/SLACK-zwave--js.slack.com-red.svg?style=popout&logo=slack&logoColor=red)](https://join.slack.com/t/zwave-js/shared_invite/zt-8ns655f6-d407vtI~KjU~1z11jyaQ9Q "Join channel")
+# Development
 
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/MVg9wc2HE "Buy Me A Coffee")
+Developers who wants to debug the application have to open two terminals.
 
-[![dockeri.co](https://dockeri.co/image/zwavejs/zwavejs2mqtt)](https://hub.docker.com/r/zwavejs/zwavejs2mqtt)
+In first terminal run `yarn dev` to start webpack-dev for front-end developing and hot reloading at <http://localhost:8092>
+(**THE PORT FOR DEVELOPING IS 8092**)
 
-<div>
-  <img src="docs/_images/zwavejs_logo.svg" width="300" alt="zwavejs">
-  <span style="font-size: 25px">TO</span>
-  <img src="docs/_images/MQTT-Logo.png" alt="mqtt">
-</div>
+In the second terminal run `yarn dev:server` to start the backend server with inspect and auto restart features
 
-Fully configurable Zwave to MQTT **Gateway** and **Control Panel**.
+To package the application run `yarn pkg` command and follow the steps
 
-- **Backend**: [NodeJS](https://nodejs.org/en/), [Express](https://expressjs.com/), [socket.io](https://github.com/socketio/socket.io), [Mqttjs](https://github.com/mqttjs/MQTT.js), [zwavejs](https://github.com/zwave-js/node-zwave-js), [Webpack](https://webpack.js.org/)
-- **Frontend**: [Vue](https://vuejs.org/), [socket.io](https://github.com/socketio/socket.io), [Vuetify](https://github.com/vuetifyjs/vuetify)
+## Developing against a different backend
 
-## Main features
+By default running `yarn dev:server` will proxy the requests to a backend listening on _localhost_ on port _8091_.
 
-- **Zwave to Mqtt Gateway**: Configure how nodes and nodes values are mapped between the two protocols
-- **Secured**: Supports *HTTPS* and users *authentication*
-- **Control Panel UI**: Directly control all your nodes and their values from the UI, some of control panel features:
-  - *Nodes management*: check all nodes discovered in the z-wave network and manage their values
-  - *Firmware updates*: update devices firmware, just select the controller action `Begin Firmware Update` and upload the firmware file
-  - *Groups associations*: add/edit nodes associations
-  - *Full zwave-js APIs support*
-- Custom **scenes management**: create scenes and trigger them by using MQTT apis (also supports timeouts)
-- Log **debug in UI**: See debug logs directly from the UI
-- **Store directory management**: all files are stored in `store` folder, you can download/edit files inside this folder directly from the UI
-- **Network graph**: see how nodes are communicating with the controller, useful for diagnostics purposes
-- **Home Assistant integration**: you can use official Zwavejs integration by enabling zwavejs server or use integrated MQTT discovery integration
+If you want to run the development frontend against a different backend you have the following environment variables
+that you can use to redirect to a different backend:
 
-## Documentation
-
-[Project documentation](https://zwave-js.github.io/zwavejs2mqtt/#/)
+- **SERVER_HOST**: [Default: 'localhost'] the hostname or IP of the backend server you want to use;
+- **SERVER_PORT**: [Default: '8091'] the port of the backend server you want to use;
+- **SERVER_SSL**: [Default: undefined] if set to a value it will use _https_/_wss_ to connect to the backend;
+- **SERVER_URL**: [Default: use the other variables] the full URL for the backend API, IE: `https://zwavetomqtt.home.net:8443/`
+- **SERVER_WS_URL**: [Default: use the other variables] the full URL for the backend Socket, IE: `wss://zwavetomqtt.home.net:8443/`
